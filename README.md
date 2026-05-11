@@ -1,16 +1,53 @@
-# React + Vite
+# Learnly
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A short-form video learning platform for 16+ students. Teachers post 60–90 second vertical lessons tagged by subject; students browse the feed, like videos, and organise their learning on collaborative whiteboards with sticky notes and real-time team chat.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React 18 + Vite
+- **Routing:** React Router
+- **Backend & Auth:** Supabase (Postgres, Auth, Storage, Realtime)
+- **Icons:** lucide-react
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Email/password authentication with role selection (student or teacher)
+- Teachers can upload short videos tagged by subject
+- TikTok-style vertical video feed with autoplay-on-scroll, like button, and mute toggle
+- Personalised student dashboard with weekly activity, day streak, total likes, recent boards, and saved videos
+- Collaborative whiteboards with coloured sticky notes, an attached reference lesson video, and real-time team chat powered by Supabase Realtime
+- Saved videos library
+- Account settings and FAQ pages
 
-## Expanding the ESLint configuration
+## Database schema
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Six Postgres tables managed via Supabase: `profiles`, `videos`, `boards`, `board_members`, `likes`, `comments`. Row-level security policies restrict writes to the owning user.
+
+## Setup
+
+1. Clone the repo:
+```bash
+   git clone https://github.com/AkifHamzi/Learnly.git
+   cd Learnly
+```
+2. Install dependencies:
+```bash
+   npm install
+```
+3. Create a `.env` file in the project root with your Supabase credentials:
+
+4. Run the dev server:
+```bash
+   npm run dev
+```
+
+## Known limitations & planned next iterations
+
+- **Draggable sticky notes:** The canvas currently uses a responsive grid. A free-positioning drag-and-drop canvas is the planned next iteration.
+- **Board invites:** The `board_members` table and `boards.share_token` field are wired for invite-based access; a share modal is the planned next step.
+- **Auto-profile creation:** A Postgres trigger on `auth.users` insert is planned so signup atomically creates a profile row, avoiding edge cases where the client-side insert can fail.
+- **View tracking:** No video views table yet; engagement metrics on the dashboard are based on likes.
+
+## Author
+
+Akif Hamzi
